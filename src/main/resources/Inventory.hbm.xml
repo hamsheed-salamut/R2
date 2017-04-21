@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+
+<hibernate-mapping>
+	
+	<class name="mu.candos.model.Inventory" table="medications">
+		<id name="medID" type="int" column="MedcineID">
+			<generator class="increment"/>
+		</id>
+		<property name="Medname" column="MName" type="string"/>
+		<property name="dosage" column="Dosage" type="string"/>
+		<property name="price" column="Price" type="int"/>
+		<property name="qty" column="Quantity" type="int"/>
+		<property name="expDate" column="ExpiryDate" type="string"/>
+		<property name="stockLevel" column="StockLevel" type="string"/>
+		<property name="medCategory" column="MedcineCategory" type="string"/>
+		<property name="supplierID" column="SupplierID" type="int"/>
+	</class>
+
+</hibernate-mapping>
