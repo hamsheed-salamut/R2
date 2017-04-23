@@ -95,8 +95,10 @@
 		
 		
 		if(error_exist == false){
-
-			 db.addDoctor(doc);
+			
+			DoctorClient dc = new DoctorClient();
+			
+			 dc.addDoctor(doc);
 			
 			 success = 1;
 			 

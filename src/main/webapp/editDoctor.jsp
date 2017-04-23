@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <jsp:useBean id="db" class="mu.candos.persistence.DoctorManager" scope="session"/>
-<%@page import="java.sql.*,mu.candos.model.Login,mu.candos.model.*,mu.candos.persistence.*,java.util.*" %>
+<%@page import="java.sql.*,mu.candos.model.Login,mu.candos.model.*,mu.candos.webclient.*,mu.candos.persistence.*,java.util.*" %>
 
 <%
     
@@ -100,8 +100,9 @@
 		
 		if(error_exist == false){
 		
-	
-			db.updateDoctor(doc);
+		DoctorClient dc = new DoctorClient();
+		
+			dc.updateDoctor(doc);
 			
 			int update = 1;
 			succes = update;
