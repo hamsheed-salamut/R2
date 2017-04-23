@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <jsp:useBean id="db" class="mu.candos.persistence.DoctorManager" scope="session"/>
-<%@page import="java.sql.*,mu.candos.model.Login,mu.candos.model.*,java.util.*" %>
+
+<%@page import="java.sql.*,mu.candos.model.Login,mu.candos.model.*,mu.candos.webclient.*,java.util.*" %>
 
 <%
 	String update_success = "0";
@@ -41,20 +42,20 @@
 	ArrayList<String> errors = new ArrayList<String>();
 
 	if (isSubmitted) {
-		
+		Doctor doc = new Doctor();
 		try {
 			
-			firstName = request.getParameter("first-name");
-			lastName = request.getParameter("last-name");
-			address = request.getParameter("address");
-			phoneNumber = Integer.parseInt(request.getParameter("phone-number"));
-			mobileNumber = Integer.parseInt(request.getParameter("mobile-number"));
-			specialisation = request.getParameter("category");
-			academics = request.getParameter("academics");
-			active = Integer.parseInt(request.getParameter("active"));
-			dob = request.getParameter("dob");
-			fee = Double.parseDouble(request.getParameter("fee"));
-			
+			doc.setFname(request.getParameter("first-name"));
+			doc.setLname(request.getParameter("last-name"));
+			doc.setAddress(request.getParameter("address"));
+			doc.setPhone(Integer.parseInt(request.getParameter("phone-number")));
+			doc.setMob(Integer.parseInt(request.getParameter("mobile-number")));
+			doc.setSpecialisation(request.getParameter("category"));
+			doc.setAcademics(request.getParameter("academics"));
+			doc.setStatus(Boolean.parseBoolean(request.getParameter("active")));
+			doc.setDob(request.getParameter("dob"));
+			doc.setFee(Double.parseDouble(request.getParameter("fee")));
+		
 		} catch (Exception e){
 			
 			errors.add("The following errors occured: ");
@@ -62,32 +63,32 @@
 		}
 
 		
-		if(firstName == null || firstName == "" || firstName.length() < 1){
+		if(doc.getFname() == null || doc.getFname() == "" || doc.getFname().length() < 1){
 			errors.add("First Name invalid");
 			error_exist = true;
 		}
 		
-		if(lastName == null || lastName == "" || lastName.length() < 1){
+		if(doc.getLname() == null || doc.getLname() == "" || doc.getLname().length() < 1){
 			errors.add("Last Name invalid");
 			error_exist = true;
 		}
 		
-		if(address == null || address == "" || address.length() < 1){
+		if(doc.getAddress() == null || doc.getAddress() == "" || doc.getAddress().length() < 1){
 			errors.add("Address invalid");
 			error_exist = true;
 		}
 		
-		if(String.valueOf(phoneNumber).length()> 8 || String.valueOf(phoneNumber).length() < 7){
+		if(String.valueOf(doc.getPhone()).length()> 8 || String.valueOf(doc.getPhone()).length() < 7){
 			errors.add("Invalid Telephone Number");
 			error_exist = true;
 		}
 		
-		if(String.valueOf(mobileNumber).length()> 8 || String.valueOf(mobileNumber).length() < 8){
+		if(String.valueOf(doc.getMob()).length()> 8 || String.valueOf(doc.getMob()).length() < 8){
 			errors.add("Invalid Mobile Number");
 			error_exist = true;
 		}
 		
-		if(academics == null || academics == "" || academics.length() < 1){
+		if(doc.getAcademics() == null || doc.getAcademics() == "" || doc.getAcademics().length() < 1){
 			errors.add("Academics Qualifications invalid");
 			error_exist = true;
 		}
@@ -95,9 +96,10 @@
 		
 		if(error_exist == false){
 
-				success = db.addDoctor(firstName, lastName, address, phoneNumber, mobileNumber, specialisation, dob,
-						fee, academics, active);
-
+			 db.addDoctor(doc);
+			
+			 success = 1;
+			 
 			} else {
 
 				success = 2;
@@ -110,7 +112,11 @@
 %>	
 
    <%
-   		ArrayList<Doctor> docs=db.getAllDoctors();
+   		// Create an instance of Web Service Doctor Client here
+   		
+   		DoctorClient client = new DoctorClient();
+   		
+   		ArrayList<Doctor> docs = client.getAllDoctors();
    %>	
 	
 	

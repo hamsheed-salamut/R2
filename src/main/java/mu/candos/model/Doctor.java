@@ -1,17 +1,34 @@
 package mu.candos.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "doctor")
 public class Doctor {
+	@Id @GeneratedValue
+	@Column(name="DoctorID")
 	private int docID;
+	@Column(name="FirstName")
 	private String fname;
+	@Column(name="LastName")
 	private String lname;
+	@Column(name="DoctorAddress")
 	private String address;
+	@Column(name="DoB")
 	private String dob;
+	@Column(name="mobileNumber")
 	private int mob;
+	@Column(name="PhoneNumber")
 	private int phone;
+	@Column(name="Specialisation")
 	private String specialisation;
+	@Column(name="Fee")
 	private double fee;
+	@Column(name="Academics")
 	private String academics;
+	@Column(name="Active")
 	private boolean status;
+	
 	public int getDocID() {
 		return docID;
 	}

@@ -8,6 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
 import mu.candos.model.*;
 import mu.candos.jdbc.DBConnection;
 
@@ -17,8 +23,14 @@ import mu.candos.jdbc.DBConnection;
  */
 public class DoctorManager {
 	
-		public int addDoctor(String fname, String lname, String address, int phone, int mob,
-							 String specialisation, String dob, double fee, String academics, int active) throws SQLException, ClassNotFoundException {
+	private SessionFactory sessionFactory;
+	
+	public DoctorManager() {
+		
+		sessionFactory = new Configuration().configure().buildSessionFactory();
+	}
+	
+		public Doctor addDoctor(Doctor doc) throws SQLException, ClassNotFoundException {
 			
 			DBConnection.DBConnect();
 			
@@ -26,16 +38,16 @@ public class DoctorManager {
 			
 			PreparedStatement pstmt = DBConnection.conn.prepareStatement(queryInsert);
 			
-			pstmt.setString(1, fname);
-			pstmt.setString(2, lname);
-			pstmt.setString(3, address);
-			pstmt.setInt(4, phone);
-			pstmt.setInt(5, mob);
-			pstmt.setString(6, specialisation);
-			pstmt.setString(7, dob);
-			pstmt.setDouble(8, fee);
-			pstmt.setString(9, academics);
-			pstmt.setInt(10, active);
+			pstmt.setString(1, doc.getFname());
+			pstmt.setString(2, doc.getLname());
+			pstmt.setString(3, doc.getAddress());
+			pstmt.setInt(4, doc.getPhone());
+			pstmt.setInt(5, doc.getMob());
+			pstmt.setString(6, doc.getSpecialisation());
+			pstmt.setString(7, doc.getDob());
+			pstmt.setDouble(8, doc.getFee());
+			pstmt.setString(9, doc.getAcademics());
+			pstmt.setBoolean(10, doc.isStatus());
 			
 			int insert = pstmt.executeUpdate();
 			
@@ -43,7 +55,7 @@ public class DoctorManager {
 			
 			pstmt.close();
 			
-			return insert;
+			return doc;
 		}
 		
 		public ArrayList<Doctor> getAllDoctors()throws SQLException,ClassNotFoundException{
@@ -135,32 +147,32 @@ public class DoctorManager {
 		}
 		
 		
-		public int updateDoctor(int id, String firstName, String lastName, String address, int phoneNumber,
-				int mobileNumber, String specialisation, String dob, double fee)
-						throws SQLException, ClassNotFoundException {
+		public Doctor updateDoctor(Doctor doc) {
 			
-			DBConnection.DBConnect();
-
-			String queryUpdate = "UPDATE doctor SET FirstName = ?, LastName = ?, DoctorAddress = ?, PhoneNumber = ?, mobileNumber = ?, Specialisation  = ?, DoB  = ?, Fee  = ? WHERE DoctorID = ?";
+			Session session = sessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
 			
-			PreparedStatement pstmt = DBConnection.conn.prepareStatement(queryUpdate);
+			Doctor dc = new Doctor();
 			
-			pstmt.setString(1, firstName);
-			pstmt.setString(2, lastName);
-			pstmt.setString(3, address);
-			pstmt.setInt(4, phoneNumber);
-			pstmt.setInt(5, mobileNumber);
-			pstmt.setString(6, specialisation);
-			pstmt.setString(7, dob);
-			pstmt.setDouble(8, fee);
-			pstmt.setInt(9, id);
+			dc.setFname(doc.getFname());
+			dc.setLname(doc.getLname());
+			dc.setAddress(doc.getAddress());
+			dc.setDob(doc.getDob());
+			dc.setDocID(doc.getDocID());
+			dc.setMob(doc.getMob());
+			dc.setPhone(doc.getPhone());
+			dc.setSpecialisation(doc.getSpecialisation());
+			dc.setAcademics(doc.getAcademics());
+			dc.setStatus(doc.isStatus());
+			dc.setFee(doc.getFee());
+			
+			session.update(dc);
+			
+			tx.commit();
+			
+			session.close();
 
-			int update = pstmt.executeUpdate();
-
-			DBConnection.conn.close();
-			pstmt.close();
-
-			return update;
+			return doc;
 
 		}
 		

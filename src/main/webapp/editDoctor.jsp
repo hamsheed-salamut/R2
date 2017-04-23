@@ -26,17 +26,17 @@
 
 	for (int i = 0; i < doctor.size(); i++) {
 
-		Doctor doc = doctor.get(i);
+		Doctor doct = doctor.get(i);
 
-		docId = doc.getDocID();
-		firstName = doc.getFname();
-		lastName = doc.getLname();
-		address = doc.getAddress();
-		phoneNumber = doc.getPhone();
-		mobileNumber = doc.getMob();
-		specialisation = doc.getSpecialisation();
-		dob = doc.getDob();
-		fee = doc.getFee();
+		docId = doct.getDocID();
+		firstName = doct.getFname();
+		lastName = doct.getLname();
+		address = doct.getAddress();
+		phoneNumber = doct.getPhone();
+		mobileNumber = doct.getMob();
+		specialisation = doct.getSpecialisation();
+		dob = doct.getDob();
+		fee = doct.getFee();
 
 	}
 	
@@ -51,15 +51,21 @@
 	ArrayList<String> errors1 = new ArrayList<String>();
 	
 	if(submitted == true){
+		
+		Doctor doc = new Doctor();
+		
 		try {
-			firstName = request.getParameter("first-name");
-			lastName = request.getParameter("last-name");
-			address = request.getParameter("address");
-			dob = request.getParameter("dob");
-			fee = Double.parseDouble(request.getParameter("fee"));
-			phoneNumber = Integer.parseInt(request.getParameter("phone-number"));
-			mobileNumber = Integer.parseInt(request.getParameter("mobile-number"));
-			specialisation = request.getParameter("category");
+			
+			doc.setDocID(doctorID);
+			doc.setFname(request.getParameter("first-name"));
+			doc.setLname(request.getParameter("last-name"));
+			doc.setAddress(request.getParameter("address"));
+			doc.setPhone(Integer.parseInt(request.getParameter("phone-number")));
+			doc.setMob(Integer.parseInt(request.getParameter("mobile-number")));
+			doc.setSpecialisation(request.getParameter("category"));
+			doc.setDob(request.getParameter("dob"));
+			doc.setFee(Double.parseDouble(request.getParameter("fee")));
+			
 
 		} catch (Exception e){
 			
@@ -67,40 +73,37 @@
 			error_exist = true;
 		}
 		
-		if(firstName == null || firstName == "" || firstName.length() < 1){
+		if(doc.getFname() == null || doc.getFname() == "" || doc.getFname().length() < 1){
 			errors.add("First Name invalid");
 			error_exist = true;
 		}
 		
-		if(lastName == null || lastName == "" || lastName.length() < 1){
+		if(doc.getLname() == null || doc.getLname() == "" || doc.getLname().length() < 1){
 			errors.add("Last Name invalid");
 			error_exist = true;
 		}
 		
-		if(address == null || address == "" || address.length() < 1){
+		if(doc.getAddress() == null || doc.getAddress() == "" || doc.getAddress().length() < 1){
 			errors.add("Address invalid");
 			error_exist = true;
 		}
 		
-		if(String.valueOf(fee)== null || String.valueOf(fee) == "" || String.valueOf(fee).length() < 1){
-			errors.add("Invalid Fee");
-			error_exist = true;
-		}
-		
-		if(String.valueOf(phoneNumber).length()> 8 || String.valueOf(phoneNumber).length() < 7){
+		if(String.valueOf(doc.getPhone()).length()> 8 || String.valueOf(doc.getPhone()).length() < 7){
 			errors.add("Invalid Telephone Number");
 			error_exist = true;
 		}
 		
-		if(String.valueOf(mobileNumber).length()>8 || String.valueOf(mobileNumber).length() < 8){
-			errors.add("Invalid mobile Number");
+		if(String.valueOf(doc.getMob()).length()> 8 || String.valueOf(doc.getMob()).length() < 8){
+			errors.add("Invalid Mobile Number");
 			error_exist = true;
 		}
 		
 		if(error_exist == false){
 		
 	
-			int update = db.updateDoctor(doctorID, firstName, lastName, address, phoneNumber, mobileNumber, specialisation, dob, fee);
+			db.updateDoctor(doc);
+			
+			int update = 1;
 			succes = update;
 			if(update > 0){
 				session.setAttribute("update", "1");
