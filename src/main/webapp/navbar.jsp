@@ -99,7 +99,7 @@
  
         </li>
         <li class="treeview">
-          <a href="patients.jsp">
+          <a href="patients-new.xhtml">
             <i class="fa fa-wheelchair"></i>
             <span>Patient Module</span>
             <span class="pull-right-container">

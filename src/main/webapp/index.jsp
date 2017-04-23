@@ -51,7 +51,7 @@
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-          <a href="patients.jsp">  <span class="info-box-icon bg-orange"><i class="fa fa-wheelchair"></i></span>
+          <a href="patients-new.xhtml">  <span class="info-box-icon bg-orange"><i class="fa fa-wheelchair"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Manage Patients</span>
