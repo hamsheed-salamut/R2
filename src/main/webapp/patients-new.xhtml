@@ -217,11 +217,11 @@
                         
                         <div class="col-md-5">
                            <label>Search By</label>
-                           <h:selectOneMenu styleClass="form-control">
+                           <p:selectOneMenu>
                                         	<f:selectItem itemValue="1" itemLabel="First Name" />
                                         	<f:selectItem itemValue="2" itemLabel="Last Name" />
                                         	<f:selectItem itemValue="3" itemLabel="NIC" />
-                           </h:selectOneMenu>
+                           </p:selectOneMenu>
                         </div>
 
                         <div class="col-md-5">
@@ -232,7 +232,7 @@
 
                         <div class="col-md-2">
                           <label>Action</label>
-                          <h:commandButton value="Search" styleClass="btn btn-success"></h:commandButton>
+                          <p:commandButton value="Search" styleClass="btn btn-success"></p:commandButton>
                         </div>
 
                      </div>
@@ -262,57 +262,32 @@
                 <div class="box-body no-padding">
 					<h:form>
                   <div class="table-responsive mailbox-messages">
-                    <h:dataTable styleClass="table table-hover table-striped"
-											border="0" width="100%">
+         			<h:commandLink>
+						<p:outputLabel value="Export to PDF"/>
+						<p:dataExporter type="pdf" target="tbl" fileName="list-patients" pageOnly="true" />
+    				</h:commandLink>	
+                    <p:dataTable value="#{patientView.allPatients}" var="pat" id="tbl">
 								
-											<h:column>
-												<f:facet name="header">
-													<f:verbatim>
-													ID
-												</f:verbatim>
-												</f:facet>
-												<h:outputText value="gfg"></h:outputText>
-											</h:column>
-
-											<h:column>
-												<f:facet name="header">
-													<f:verbatim>
-													First Name
-												</f:verbatim>
-												</f:facet>
-												<h:outputText value="gfgf"></h:outputText>
-											</h:column>
-											
-											<h:column>
-												<f:facet name="header">
-													<f:verbatim>
-													Last Name
-												</f:verbatim>
-												</f:facet>
-												<h:outputText value="gfgf"></h:outputText>
-											</h:column>
-																
-											<h:column>
-												<f:facet name="header">
-													<f:verbatim>
-													NIC
-												</f:verbatim>
-												</f:facet>
-												<h:outputText value="gfg"></h:outputText>
-											</h:column>						
-
-											<h:column>
-												<f:facet name="header">
-													<f:verbatim>
-													Action
-												</f:verbatim>
-												</f:facet>
-												<h:commandButton styleClass="btn btn-primary btn-xs" value="Edit"></h:commandButton>
-												&nbsp;
-												<h:commandButton styleClass="btn btn-danger btn-xs" value="Delete" onclick="return confirm('Are you sure to delete?');"></h:commandButton>
-											</h:column>
+								<p:column headerText="Id">
+						       		<p:outputLabel value="#{pat.id}" />
+						   		</p:column>
+						   		
+						   		<p:column headerText="First Name">
+						       		<p:outputLabel value="#{pat.firstName}" />
+						   		</p:column>
+						   		
+						   		<p:column headerText="Last Name">
+						       		<p:outputLabel value="#{pat.lastName}" />
+						   		</p:column>
+						   		
+						   		<p:column headerText="Gender">
+						       		<p:outputLabel value="#{pat.gender}" />
+						   		</p:column>
 																																	
-										</h:dataTable>
+					</p:dataTable>
+					
+		
+							
 										<!-- /.table -->
                   </div><!-- /.mail-box-messages -->
                   </h:form>
@@ -331,29 +306,30 @@
                 </div>
                 <h:form>
                 <div class="box-body">
-
+					
+					<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                           
                            <label>First Name</label>
-                           <h:inputText value="" styleClass="form-control"/>
+                           <p:inputText value="#{patientView.firstName}" styleClass="form-control"/>
                          
                            <br/>
                            <label>Last Name</label>
-                           <h:inputText value="" styleClass="form-control"/>
+                           <p:inputText value="#{patientView.lastName}" styleClass="form-control"/>
         
                              <br/>
                            <label>Address</label>
-                           <h:inputText value="" styleClass="form-control"/>
+                           <p:inputText value="#{patientView.address}" styleClass="form-control"/>
 
                            <br/>
                            <div class="row">
                               <div class="col-md-6">
                                  <label>Date of Birth</label>
-                                <h:inputText value="" styleClass="form-control datepick"/>
+                               <p:calendar id="german" value="#{patientView.DOB}" locale="de" navigator="true" pattern="yyyy-MMM-dd" />
                               
                               </div>
                               <div class="col-md-6">
                                  <label>National Identity Card</label>
-                                 <h:inputText value="" styleClass="form-control"/>
+                                 <h:inputText value="#{patientView.NIC}" styleClass="form-control"/>
                         
                               </div>
                            </div>
@@ -361,7 +337,7 @@
                            <div class="row">
                               <div class="col-md-6">
                                  <label>Phone Number</label>
-                                 <h:inputText value="" styleClass="form-control"/>
+                                 <p:inputMask id="phone" value="#{patientView.phone}" mask="(999) 999-9999"/>
                       
                               </div>
                               
@@ -372,24 +348,28 @@
                               <div class="col-md-4">
                                  <label>Gender</label><br/>
 
-                                 <h:selectOneRadio style="minimal">
+                                 <p:selectOneRadio value="#{patientView.gender}">
 									<f:selectItem itemValue="male" itemLabel=" Male" escape="false"/> 
 									<f:selectItem itemValue="female" itemLabel="Female" escape="false"/> 
-								</h:selectOneRadio>
+								</p:selectOneRadio>
                          
                                  
                               </div>
                               
                               <div class="col-md-4">
                                  <label>Weight (kg)</label>
-                                 <h:inputText value="" styleClass="form-control"/>
+                                
+       							<p:spinner value="#{patientView.weight}"/>
                       
                               </div>
                               
                               <div class="col-md-4">
                                  <label>Height (m)</label>
-                                 <h:inputText value="" styleClass="form-control" >
-                              </h:inputText>
+                              
+								<h:panelGrid columns="1" style="margin-bottom: 10px">
+							  	 <p:inputText id="txt1" value="#{patientView.height}" />
+							        <p:slider for="txt1" />
+							    </h:panelGrid>
                  
                               </div>
                               
@@ -397,7 +377,8 @@
                            <br/>
 
                 		<div class="row">
-                			<div class="col-md-12"><h:commandButton value="Save Changes"  styleClass="btn btn-success"/></div>
+                			<div class="col-md-12"><p:commandButton value="Save Changes" actionListener="#{patientView.addPatients()}" ajax="false"/></div>
+                
                 		</div>
 		</div>
 		

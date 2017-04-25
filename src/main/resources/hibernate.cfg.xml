@@ -34,7 +34,7 @@
     	<!-- List of Mapping Classes -->
     	
     	<mapping class="mu.candos.model.Doctor"/>
-    	
+    	<mapping class="mu.candos.model.Patient"/>
     	
  
     </session-factory>

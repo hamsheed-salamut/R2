@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+ 
+     <h:head>
+ 
+     </h:head>
+ 
+     <h:body>
+ 
+         <p:spinner /> <br/>
+ 		<p:commandButton value="Works"></p:commandButton>  <br/>
+ 		<br/>
+ 		
+
+       									 
+	<h:panelGrid columns="1" style="margin-bottom: 10px">
+  	 <p:inputText id="txt1" value="#{patientView.height}" />
+        <p:slider for="txt1" />
+    </h:panelGrid>
+ 		
+ 		<p:inputText>
+ 		</p:inputText>
+ 		
+ 		<br/>
+ 		
+ 		        <p:selectOneRadio id="console" value="">
+            <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+            <f:selectItem itemLabel="PS4" itemValue="PS4" />
+            <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+        </p:selectOneRadio>
+     </h:body>
+</html>
